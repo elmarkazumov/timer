@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bloc_centered {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.header__buttons {
+    width: 650px;
+    margin-top: 40px;
+    border: 1px solid rgb(223, 223, 223);
+    padding: 15px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.header__buttons li {
+    display: inline-block;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.window {
+    width: 650px;
+    height: 500px;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 5px;
+    margin-top: 20px;
+}
