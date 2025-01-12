@@ -10,7 +10,6 @@
         <ul class="header__buttons">
             <li>Время</li>
             <li>Секундомер</li>
-            <li>Pomodoro</li>
             <li>Обратный отсчет</li>
         </ul>
     </header>
@@ -35,7 +34,25 @@
 
             </div>
 
-            
+            <div class="window__stopwatch">
+                <span id="stopwatch_indicator">04:30</span>
+                <input type="button" value="Старт / Стоп">
+                <input type="button" value="Сбросить">
+            </div>
+
+            <div class="window__countdown">
+                <span id="countdown_indicator">01:04:20</span>
+                <div class="countdown_inputs">
+                    <input type="number" min="0" name="" id="countdown_hour" placeholder="Час">
+                    <label for="countdown_hour">часов</label>
+                    <input type="number" min="0" max="60" name="" id="countdown_min" placeholder="Мин">
+                    <label for="countdown_hour">минут</label>
+                    <input type="number" min="0" max="60" name="" id="countdown_sec" placeholder="Сек">
+                    <label for="countdown_hour">секунд</label>
+                </div>
+                <input type="button" value="Старт / Стоп">
+                <input type="button" value="Сбросить">
+            </div>
         </div>
     </main>
 
