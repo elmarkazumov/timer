@@ -12,6 +12,23 @@ class ChangeWindows {
         this.logic = new Functional();
     }
 
+    hiddenWindows() {
+        for(const key in this.objectWindows) {
+            this.objectWindows[key].style.display = 'none';
+        }
+    }
+
+    showSelectedWindow() {
+        const buttons = document.querySelectorAll('.header__buttons > li');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                this.hiddenWindows();
+                this.objectWindows[event.target.getAttribute('data-button')].style.display = 'flex';
+            });
+        })
+    }    
+
     changeCurrentDate() {
         const localTime = this.objectWindows.windowTime.querySelector('#local_time');
         const localDate = this.objectWindows.windowTime.querySelector('#local_date');
@@ -29,26 +46,36 @@ class ChangeWindows {
 
     }
 
-    hiddenWindows() {
-        for(const key in this.objectWindows) {
-            this.objectWindows[key].style.display = 'none';
-        }
-    }
+    controlStopwatch() {
+        const stopwatchIndicator = this.objectWindows.windowStopwatcth.querySelector('#stopwatch_indicator');
+        const startStopButton = this.objectWindows.windowStopwatcth.querySelector('#stopwatch_start_stop');
+        const resetButton = this.objectWindows.windowStopwatcth.querySelector('#stopwatch_reset');
+        let state = false;
 
-    showSelectedWindow() {
-        const buttons = document.querySelectorAll('.header__buttons > li');
+        this.objectWindows.windowStopwatcth.addEventListener('click', (event) => {
+            if(event.target == startStopButton) {
+                state = state == false ? true: false;
+                
+                if(state) {
+                    this.logic.startStopwatch(stopwatchIndicator, state);
+                } else {
+                    this.logic.stopwatch(state);
+                }
 
-        buttons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                this.hiddenWindows();
-                this.objectWindows[event.target.getAttribute('data-button')].style.display = 'flex';
-            });
+            }
+
+            if(event.target == resetButton) {
+                this.logic.resetStopwatch();
+                stopwatchIndicator.textContent = '00:00:00';
+            }
         })
+
     }
 
     init() {
         this.showSelectedWindow();
         this.changeCurrentDate();
+        this.controlStopwatch();
     }
 
 }
