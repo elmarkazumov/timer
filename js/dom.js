@@ -66,16 +66,46 @@ class ChangeWindows {
 
             if(event.target == resetButton) {
                 this.logic.resetStopwatch();
+                state = false;
                 stopwatchIndicator.textContent = '00:00:00';
             }
         })
+    }
 
+    controlCountdown() {
+        const countdownIndicator = this.objectWindows.windowCountdown.querySelector('#countdown_indicator');
+        const startStopButton = this.objectWindows.windowCountdown.querySelector('#countdown_start_stop');
+        const resetButton = this.objectWindows.windowCountdown.querySelector('#countdown_reset');
+        let state = false;
+
+        const countdownHour = this.objectWindows.windowCountdown.querySelector('#countdown_hour');
+        const countdownMin = this.objectWindows.windowCountdown.querySelector('#countdown_min');
+        const countdownSec = this.objectWindows.windowCountdown.querySelector('#countdown_sec');
+
+        this.objectWindows.windowCountdown.addEventListener('click', (event) => {
+            if(event.target == startStopButton) {
+                state = state == false ? true: false;
+                
+                if(state) {
+                    this.logic.startCountdown(countdownIndicator, state, [countdownHour.value, countdownMin.value, countdownSec.value]);
+                } else {
+                    this.logic.stopCountdown(state);
+                }
+            }
+
+            if(event.target == resetButton) {
+                this.logic.resetCountdown();
+                state = false;
+                countdownIndicator.textContent = '00:00:00';
+            }
+        })
     }
 
     init() {
         this.showSelectedWindow();
         this.changeCurrentDate();
         this.controlStopwatch();
+        this.controlCountdown();
     }
 
 }

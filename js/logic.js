@@ -5,6 +5,9 @@ class Functional {
             sec: 0,
             min: 0,
             hour: 0,
+        },
+
+        this.countdownParams = {
         }
     }
 
@@ -53,7 +56,6 @@ class Functional {
           if(state) {
             updateSecond();
           }
-          
     }
 
     stopwatch(state) {
@@ -68,6 +70,57 @@ class Functional {
             this.stopwatchParams.min = 0;
             this.stopwatchParams.hour = 0;
             clearTimeout(this.stopwatchParams.timer);
+        }
+    }
+
+    startCountdown(widget, state, values) {
+
+        if(!Object.keys(this.countdownParams).length) {
+            this.countdownParams.hour = +values[0];
+            this.countdownParams.min = +values[1];
+            this.countdownParams.sec = +values[2];
+        }
+
+        const updateCountdown = () => {
+
+            this.countdownParams.timer = setTimeout(updateCountdown, 1000);
+
+            if(this.countdownParams.min == 0 && this.countdownParams.hour > 0) {
+                this.countdownParams.min = 60;
+                this.countdownParams.hour -= 1;
+            }
+
+            if(this.countdownParams.sec == 0 && this.countdownParams.min > 0) {
+                this.countdownParams.sec = 60;
+                this.countdownParams.min -= 1;
+            }
+
+            if(this.countdownParams.sec <= 60 && this.countdownParams.sec > 0) {
+                this.countdownParams.sec -= 1;
+            }
+
+            widget.textContent = `${this.countdownParams.hour < 10 ? '0' + this.countdownParams.hour: this.countdownParams.hour}:
+            ${this.countdownParams.min < 10 ? '0' + this.countdownParams.min: this.countdownParams.min}:
+            ${this.countdownParams.sec < 10 ? '0' + this.countdownParams.sec: this.countdownParams.sec}`.replace(/\:\n(\s+)/gm, ':');
+                        
+          }
+
+          if(state) {
+            updateCountdown();
+          }
+          console.log(this.countdownParams)
+    }
+
+    stopCountdown(state) {
+        if(!state) {
+            clearTimeout(this.countdownParams.timer);
+        }
+    }
+
+    resetCountdown() {
+        if(this.countdownParams.timer) {
+            this.countdownParams = {};
+            clearTimeout(this.countdownParams.timer);
         }
     }
 
