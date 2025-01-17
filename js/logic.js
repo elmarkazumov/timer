@@ -83,8 +83,6 @@ class Functional {
 
         const updateCountdown = () => {
 
-            this.countdownParams.timer = setTimeout(updateCountdown, 1000);
-
             if(this.countdownParams.min == 0 && this.countdownParams.hour > 0) {
                 this.countdownParams.min = 60;
                 this.countdownParams.hour -= 1;
@@ -108,7 +106,8 @@ class Functional {
           if(state) {
             updateCountdown();
           }
-          console.log(this.countdownParams)
+
+          this.countdownParams.timer = setTimeout(updateCountdown, 1000);
     }
 
     stopCountdown(state) {
