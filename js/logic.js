@@ -100,14 +100,14 @@ class Functional {
             widget.textContent = `${this.countdownParams.hour < 10 ? '0' + this.countdownParams.hour: this.countdownParams.hour}:
             ${this.countdownParams.min < 10 ? '0' + this.countdownParams.min: this.countdownParams.min}:
             ${this.countdownParams.sec < 10 ? '0' + this.countdownParams.sec: this.countdownParams.sec}`.replace(/\:\n(\s+)/gm, ':');
-                        
+
+
+            this.countdownParams.timer = setTimeout(updateCountdown, 1000);
           }
 
           if(state) {
             updateCountdown();
           }
-
-          this.countdownParams.timer = setTimeout(updateCountdown, 1000);
     }
 
     stopCountdown(state) {
@@ -118,8 +118,8 @@ class Functional {
 
     resetCountdown() {
         if(this.countdownParams.timer) {
-            this.countdownParams = {};
             clearTimeout(this.countdownParams.timer);
+            this.countdownParams = {};
         }
     }
 
