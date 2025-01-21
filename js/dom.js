@@ -54,9 +54,41 @@ class ChangeWindows {
 
         formSearchLocation.addEventListener('submit', async (event) => {
             event.preventDefault();
-            const date = await this.api.getDate(location.value);
+            const response = await this.api.getDate(location.value);
+            this.createWindowSelectedLocation(response.date_time, response.timezone);
             
+            location.value = '';
         })
+    }
+
+    createWindowSelectedLocation(date, location) {
+        const windowLocationTime = document.createElement('div');
+        windowLocationTime.classList = 'window__zone';
+
+        const selectedLocationTime = document.createElement('span');
+        selectedLocationTime.id = 'selected_time';
+
+        const selectedLocationDate = document.createElement('span');
+        selectedLocationDate.id = 'selected_date';
+
+        const selectedLocationDay = document.createElement('span');
+        selectedLocationDay.id = 'selected_day';
+
+        const selectedLocation = document.createElement('span');
+        selectedLocationDay.id = 'selected_location';
+
+        this.objectWindows.windowTime.querySelector('.window__zones').prepend(windowLocationTime);
+        windowLocationTime.append(selectedLocationTime, selectedLocationDate, selectedLocationDay, selectedLocation);
+
+
+        selectedLocationTime.textContent = this.logic.getCurrentTime(new Date(date));
+
+        selectedLocationDate.textContent = this.logic.getCurrentDate(new Date(date));
+
+        selectedLocationDay.textContent = this.logic.getCurrentWeekday(new Date(date));
+
+        selectedLocation.textContent = location;
+
     }
 
     controlStopwatch() {
