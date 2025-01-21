@@ -1,4 +1,5 @@
 import {Functional} from "./logic.js";
+import { RequestToApi } from "./api.js";
 
 
 class ChangeWindows {
@@ -10,6 +11,7 @@ class ChangeWindows {
         }
 
         this.logic = new Functional();
+        this.api = new RequestToApi();
     }
 
     hiddenWindows() {
@@ -44,6 +46,17 @@ class ChangeWindows {
           
           updateDate();
 
+    }
+
+    selectLocation(){
+        const formSearchLocation = this.objectWindows.windowTime.querySelector('.window__search');
+        const location = formSearchLocation.querySelector('#search_zone');
+
+        formSearchLocation.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const date = await this.api.getDate(location.value);
+            
+        })
     }
 
     controlStopwatch() {
@@ -106,6 +119,7 @@ class ChangeWindows {
         this.changeCurrentDate();
         this.controlStopwatch();
         this.controlCountdown();
+        this.selectLocation();
     }
 
 }
