@@ -29,6 +29,13 @@ class Functional {
         return date.toLocaleTimeString();
     }
 
+    getMinutesHours(time){
+        const hour = time.getHours();
+        const minute = time.getMinutes();
+
+        return `${hour < 10 ? '0' + hour: hour}:${minute < 10 ? '0' + minute: minute}`.replace(/\:\n(\s+)/gm, ':');
+    }
+
     startStopwatch(widget, state) {
 
         const updateSecond = () => {

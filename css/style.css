@@ -150,3 +150,7 @@
     box-sizing: border-box;
     border: 1px solid rgb(223, 223, 223);
 }
+
+.selected_location_window {
+    display: none;
+}

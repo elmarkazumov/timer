@@ -3,7 +3,7 @@ class RequestToApi {
     #apiKey
 
     constructor() {
-        this.#apiKey = '05f3398e616a4f75baef9df4c57a5740';
+        this.#apiKey = '6378417a58324ccda22007978fe4030c';
     }
 
     async getDate(location) {

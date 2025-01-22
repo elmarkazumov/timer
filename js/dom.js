@@ -54,38 +54,34 @@ class ChangeWindows {
 
         formSearchLocation.addEventListener('submit', async (event) => {
             event.preventDefault();
-            const response = await this.api.getDate(location.value);
-            this.createWindowSelectedLocation(response.date_time, response.timezone);
+            let searchedLocation = location.value;
+
+            const changeSelectedDate = async () => {
+                const response = await this.api.getDate(searchedLocation);
+                this.createWindowSelectedLocation(response.date_time, response.timezone);
             
+                setTimeout(changeSelectedDate, 10000);
+            }
+            
+            changeSelectedDate();
+
             location.value = '';
         })
     }
 
     createWindowSelectedLocation(date, location) {
-        const windowLocationTime = document.createElement('div');
-        windowLocationTime.classList = 'window__zone';
+        const selectedTime = this.objectWindows.windowTime.querySelector('#selected_time');
+        const selectedDate = this.objectWindows.windowTime.querySelector('#selected_date');
+        const selectedWeekDay = this.objectWindows.windowTime.querySelector('#selected_day');
+        const selectedLocation = this.objectWindows.windowTime.querySelector('#selected_location');
+        const selectedLocationWindow = this.objectWindows.windowTime.querySelector('.selected_location_window');
+        selectedLocationWindow.style.display = 'flex';
 
-        const selectedLocationTime = document.createElement('span');
-        selectedLocationTime.id = 'selected_time';
+        selectedTime.textContent = this.logic.getMinutesHours(new Date(date));
 
-        const selectedLocationDate = document.createElement('span');
-        selectedLocationDate.id = 'selected_date';
+        selectedDate.textContent = this.logic.getCurrentDate(new Date(date));
 
-        const selectedLocationDay = document.createElement('span');
-        selectedLocationDay.id = 'selected_day';
-
-        const selectedLocation = document.createElement('span');
-        selectedLocationDay.id = 'selected_location';
-
-        this.objectWindows.windowTime.querySelector('.window__zones').prepend(windowLocationTime);
-        windowLocationTime.append(selectedLocationTime, selectedLocationDate, selectedLocationDay, selectedLocation);
-
-
-        selectedLocationTime.textContent = this.logic.getCurrentTime(new Date(date));
-
-        selectedLocationDate.textContent = this.logic.getCurrentDate(new Date(date));
-
-        selectedLocationDay.textContent = this.logic.getCurrentWeekday(new Date(date));
+        selectedWeekDay.textContent = this.logic.getCurrentWeekday(new Date(date));
 
         selectedLocation.textContent = location;
 
